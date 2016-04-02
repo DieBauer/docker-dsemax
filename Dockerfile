@@ -1,9 +1,9 @@
 FROM java:openjdk-8u72-jdk
 MAINTAINER jenskat
 
-RUN apt-get update && apt-get -y install curl apt-transport-https
+RUN apt-get update && apt-get -y install curl apt-transport-https sudo
 ADD datastax.sources.list /etc/apt/sources.list.d/datastax.sources.list
-RUN curl -L http://debian.datastax.com/debian/repo_key | apt-key add -
+RUN curl -L http://debian.datastax.com/debian/repo_key | sudo apt-key add -
 
 RUN apt-get update && apt-get -y install supervisor dse-full
 
