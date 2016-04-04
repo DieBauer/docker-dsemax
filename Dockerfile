@@ -7,7 +7,7 @@ RUN curl -L http://debian.datastax.com/debian/repo_key | sudo apt-key add -
 
 RUN apt-get update && apt-get -y install supervisor dse-full
 
-VOLUME ["/data"]
+VOLUME ["/var/lib/cassandra/data"]
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY dse /etc/default/dse
@@ -33,5 +33,10 @@ EXPOSE 10000
 
 #OpsCenter
 EXPOSE 50031 61620 61621
+
+ENV CASSANDRA_CONFIG /etc/dse/cassandra
+
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["/usr/bin/supervisord"]
